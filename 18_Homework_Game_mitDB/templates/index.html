@@ -1,0 +1,35 @@
+{% extends "base.html" %} <!-- Basis bildet base.html geladen mit Hilfe von jinja -->
+
+{% block content %}         <!-- Content, der mit Hilfe von jinja eingefügt wird in base.html -->
+
+<h1>Welcome to the Game:
+    <br> Secret Number</h1>
+
+<p>Current time: {{current_time}}</p> <!-- jinja Variable wird eingefügt -->
+<br>
+
+<!-- wenn user bereits gespielt und gewonnen hat -->
+{% if user and user.secret_number %}   <!-- falls Cookie für Mail vorhanden -->
+    <h2> Hello, {{name}}! Guess a number between 1 and 30! </h2>
+    <br>
+    <h2>Good Luck!</h2>
+    <form method="post" action="/result">
+        <input type="text" name="guess" placeholder="Enter your guess">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+<!-- ansonsten -->
+{% else %}
+    <h2> Please login to play the game :-)</h2>
+    <form method="post" action="/login"> <!-- View Anpassung für Datenbank -->
+        <input type="text" name="user-name" placeholder="Enter your name">
+        <br>
+        <input type="email" name="user-email" placeholder="Enter your email address">
+        <br>
+        <button>Submit</button>
+    </form>
+
+{% endif %}
+{% endblock content%}
+
